@@ -136,9 +136,11 @@ function MyPage() {
       </ProfileSection>
 
       <ButtonGrid>
-        <Button onClick={() => navigate("/mydonate")}>기부 내역</Button>
-        <Button onClick={() => navigate("/myexchange")}>환전 내역</Button>
-        <Button onClick={() => navigate("/mysell")}>나의 판매</Button>
+        <Button onClick={() => navigate("/mypage/mydonate")}>기부 내역</Button>
+        <Button onClick={() => navigate("/mypage/myexchange")}>
+          환전 내역
+        </Button>
+        <Button onClick={() => navigate("/mypage/mysell")}>나의 판매</Button>
         <Button onClick={() => navigate("/calculator")}>외화 계산기</Button>
       </ButtonGrid>
 

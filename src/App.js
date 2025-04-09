@@ -40,13 +40,13 @@ function App() {
             <Route exact path="/" element={<Login />} />
             <Route exact path="/auth/kakao/callback" element={<Login />} />
             <Route exact path="/mypage" element={<MyPage />} />
-            <Route exact path="/mysell" element={<MySell />} />
-            <Route exact path="/myexchange" element={<MyExchange />} />
+            <Route exact path="/mypage/mysell" element={<MySell />} />
+            <Route exact path="/mypage/myexchange" element={<MyExchange />} />
             <Route exact path="/detect" element={<Detect />} />
             <Route exact path="/donate" element={<Donate />} />
             <Route path="/donateinfo" element={<DonateInfo />} />
             <Route path="/donateregister" element={<DonateRegister />} />
-            <Route exact path="/mydonate" element={<MyDonate />} />
+            <Route exact path="/mypage/mydonate" element={<MyDonate />} />
           </Routes>
         </Layout>
       </BrowserRouter>

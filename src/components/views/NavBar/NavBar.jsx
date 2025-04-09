@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import homeicon from "../../images/NavBar/homeicon.svg";
 import homeiconActive from "../../images/NavBar/homeicon-active.svg"; // 빨간색 아이콘 추가
@@ -14,65 +14,70 @@ import usericon from "../../images/NavBar/usericon.svg";
 import usericonActive from "../../images/NavBar/usericon-active.svg";
 
 function NavBar() {
-  const [active, setActive] = useState("list");
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleClick = (tab, path) => {
-    setActive(tab);
+  const currentPath = location.pathname;
+
+  const handleClick = (path) => {
     navigate(path);
   };
 
   return (
     <Container>
       <NavItem
-        isActive={active === "list"}
-        onClick={() => handleClick("list", "/list")}
+        isActive={currentPath === "/list"}
+        onClick={() => handleClick("/list")}
       >
         <NavIcon
-          src={active === "list" ? homeiconActive : homeicon}
+          src={currentPath === "/list" ? homeiconActive : homeicon}
           alt="목록"
         />
-        <NavText isActive={active === "list"}>목록</NavText>
+        <NavText isActive={currentPath === "/list"}>목록</NavText>
       </NavItem>
+
       <NavItem
-        isActive={active === "donate"}
-        onClick={() => handleClick("donate", "/donate")}
+        isActive={currentPath === "/donate"}
+        onClick={() => handleClick("/donate")}
       >
         <NavIcon
-          src={active === "donate" ? donateiconActive : donateicon}
+          src={currentPath === "/donate" ? donateiconActive : donateicon}
           alt="기부하기"
         />
-        <NavText isActive={active === "donate"}>기부하기</NavText>
+        <NavText isActive={currentPath === "/donate"}>기부하기</NavText>
       </NavItem>
+
       <NavItem
-        isActive={active === "camera"}
-        onClick={() => handleClick("camera", "/detect")}
+        isActive={currentPath === "/detect"}
+        onClick={() => handleClick("/detect")}
       >
         <NavIcon
-          src={active === "camera" ? cameraiconActive : cameraicon}
+          src={currentPath === "/detect" ? cameraiconActive : cameraicon}
           alt="카메라"
         />
-        <NavText isActive={active === "camera"}>카메라</NavText>
+        <NavText isActive={currentPath === "/detect"}>카메라</NavText>
       </NavItem>
+
       <NavItem
-        isActive={active === "chatlist"}
-        onClick={() => handleClick("chatlist", "/chatlist")}
+        isActive={currentPath === "/chatlist"}
+        onClick={() => handleClick("/chatlist")}
       >
         <NavIcon
-          src={active === "chatlist" ? chaticonActive : chaticon}
+          src={currentPath === "/chatlist" ? chaticonActive : chaticon}
           alt="채팅하기"
         />
-        <NavText isActive={active === "chatlist"}>채팅하기</NavText>
+        <NavText isActive={currentPath === "/chatlist"}>채팅하기</NavText>
       </NavItem>
+
       <NavItem
-        isActive={active === "mypage"}
-        onClick={() => handleClick("mypage", "/mypage")}
+        isActive={currentPath.startsWith("/mypage")}
+        onClick={() => handleClick("/mypage")}
       >
         <NavIcon
-          src={active === "mypage" ? usericonActive : usericon}
+          src={currentPath.startsWith("/mypage") ? usericonActive : usericon}
           alt="내 정보"
         />
-        <NavText isActive={active === "mypage"}>내 정보</NavText>
+        <NavText isActive={currentPath === "/mypage"}>내 정보</NavText>
       </NavItem>
     </Container>
   );
