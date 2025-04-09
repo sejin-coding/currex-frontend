@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import backarrow from "../../images/backarrow.svg";
 import editicon from "../../images/editicon.svg";
 import api from "../../utils/api";
+import defaultAvatar from "../../images/avatar.png";
+
 import axios from "axios";
 
 function MyPage() {
@@ -126,7 +128,10 @@ function MyPage() {
       </Header>
 
       <ProfileSection>
-        <ProfileImage src={userInfo.profileImg} alt="프로필 사진" />
+        <ProfileImage
+          src={userInfo.profileImg || defaultAvatar}
+          alt="프로필 사진"
+        />
         <UserName>{userInfo.nickname}</UserName>
       </ProfileSection>
 

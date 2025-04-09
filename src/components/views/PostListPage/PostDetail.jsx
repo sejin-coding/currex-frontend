@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import backarrowwhite from "../../images/backarrow-white.svg";
+import backarrow from "../../images/backarrow.svg";
 import moredetail from "../../images/moredetails.svg";
 import axios from "axios";
 import api from "../../utils/api";
@@ -206,7 +206,7 @@ function PostDetail() {
           <TopBar>
             <BackButton
               onClick={() => window.history.back()}
-              src={backarrowwhite}
+              src={backarrow}
               alt="뒤로가기"
             />
             {sell.sellerId === currentUserId && (
@@ -298,7 +298,6 @@ const Container = styled.div`
   background: white;
 `;
 
-
 const ImageBackground = styled.div`
   position: relative;
   width: 100%;
@@ -336,7 +335,7 @@ const BackButton = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin-left: 0;
+  margin-left: 20px;
 `;
 
 const MenuButton = styled.img`
