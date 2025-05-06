@@ -66,6 +66,32 @@ function PostList() {
     fetchSells();
   }, [navigate]);
 
+
+  //거래주소없으면 마이페이지로 이동하게 하기
+  const [showTradeAddressModal, setShowTradeAddressModal] = useState(false);
+  useEffect(() => {
+  const checkUserTradeAddress = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
+      if (!accessToken) return;
+
+      const userResponse = await api.get("/api/user/mypage", {
+        withCredentials: true,
+      });
+
+      const user = userResponse.data;
+      if (!user.tradeAddress || user.tradeAddress.trim() === "") {
+        setShowTradeAddressModal(true); // 모달 표시
+      }
+    } catch (error) {
+      console.error("유저 정보 가져오기 실패:", error);
+    }
+  };
+
+  checkUserTradeAddress();
+}, []);
+
+
   // 실시간 환율 가져오기
   const [exchangeRates, setExchangeRates] = useState({}); // 환율 데이터를 저장할 상태
 
@@ -291,7 +317,22 @@ useEffect(() => {
         )}
       </SortWrapper>
 
-
+      {/* 거래 주소 입력 모달 */}
+      {showTradeAddressModal && (
+      <Modal>
+        <ModalContent>
+          <h3>거래 주소를 입력해 주세요.</h3>
+          <MoveButton
+            onClick={() => {
+              setShowTradeAddressModal(false);
+              navigate("/mypage"); // 마이페이지로 이동
+            }}
+          >
+            마이페이지로 이동
+          </MoveButton>
+        </ModalContent>
+      </Modal>
+    )}
 
       {/* 국가 필터 모달 */}
       {showCountryFilter && (
@@ -562,6 +603,21 @@ const ConfirmButton = styled.button`
   cursor: pointer;
   margin-top: 16px;
 
+  &:hover {
+    background: #333;
+  }
+`;
+
+const MoveButton = styled.button`
+  background: #CA2F28;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 16px;
   &:hover {
     background: #333;
   }
