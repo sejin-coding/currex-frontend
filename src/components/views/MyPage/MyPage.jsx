@@ -367,7 +367,7 @@ const LogoutSection = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 1s0px;
 `;
 
 const LogoutButton = styled.button`

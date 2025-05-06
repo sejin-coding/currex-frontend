@@ -43,7 +43,7 @@ function PostList() {
 
         if (!accessToken) {
           alert("로그인이 필요합니다.");
-          navigate("/login");
+          navigate("/");
           return;
         }
 
@@ -150,6 +150,7 @@ useEffect(() => {
       return distanceA - distanceB;
     });
   }
+  console.log("distance 값 확인:", sells.map(s => s.distance));
 
   //console.log("정렬된 데이터:", sortedFiltered);
   setFilteredSells([...sortedFiltered]); // 새로운 배열을 상태에 직접 반영
@@ -272,8 +273,8 @@ useEffect(() => {
 
       </Header>
 
-      <SortWrapper>
-        <SortButton ref={sortDropdownRef} onClick={() => setShowSortDropdown(!showSortDropdown)}>
+      <SortWrapper ref={sortDropdownRef}>
+        <SortButton onClick={() => setShowSortDropdown(!showSortDropdown)}>
           {selectedSort === "latest" ? "최신순" : "거리순"}
           <SortDropdownIcon src={dropdown} alt="드롭다운" />
         </SortButton>
@@ -289,6 +290,7 @@ useEffect(() => {
           </SortDropdownMenu>
         )}
       </SortWrapper>
+
 
 
       {/* 국가 필터 모달 */}

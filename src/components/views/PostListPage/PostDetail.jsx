@@ -78,7 +78,7 @@ function PostDetail() {
         console.error("판매 정보 불러오기 실패:", error);
         if (error.response?.status === 401) {
           alert("인증이 만료되었습니다. 다시 로그인해주세요.");
-          navigate("/login");
+          navigate("/");
         } else if (error.response?.status === 404) {
           alert("판매 정보를 찾을 수 없습니다.");
         }
@@ -231,7 +231,7 @@ function PostDetail() {
               <UserName>{sell.name || "익명 판매자"}</UserName>
             </UserInfo>
           </TopInfo>
-          <Price>${sell.amount?.toLocaleString()}</Price>
+          <Price>{sell.amount?.toLocaleString()} {sell.currency}</Price>
           <InfoSection>
             <InfoTitle>거래 위치</InfoTitle>
             <InfoValue>{sell.location || "위치 정보 없음"}</InfoValue>
@@ -240,7 +240,7 @@ function PostDetail() {
             <InfoTitle>환율</InfoTitle>
             <InfoValue>
               {exchangeRates[sell.currency]
-                ? `100 ${sell.currency} / ${exchangeRates[
+                ? `1 ${sell.currency} / ${exchangeRates[
                     sell.currency
                   ].toFixed(2)} 원`
                 : "환율 정보 없음"}
@@ -335,7 +335,7 @@ const BackButton = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 const MenuButton = styled.img`
