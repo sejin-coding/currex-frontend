@@ -31,7 +31,7 @@ api.interceptors.response.use(
       try {
         // /auth/refresh 요청하여 새로운 accessToken 발급
         const refreshResponse = await axios.post(
-          "https://15.165.1.49:5000/auth/refresh",
+          "https://currex.kro.kr/api/auth/refresh",
           {},
           { withCredentials: true } // 쿠키 전달 (refreshToken 포함)
         );
