@@ -10,6 +10,7 @@ import api from "../../utils/api";
 
 function Donate() {
   const [isOpen, setIsOpen] = useState(true);
+  const [myDonationTotal, setMyDonationTotal] = useState(0);
   const toggleRanking = () => {
     setIsOpen(!isOpen);
   };
@@ -63,7 +64,27 @@ function Donate() {
       }
     };
 
+    const fetchMyDonation = async () => {
+      try {
+        const accessToken =
+          localStorage.getItem("accessToken") ||
+          sessionStorage.getItem("accessToken");
+
+        const res = await api.get("/api/donation/total", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        console.log("내 기부 총액 응답:", res.data);
+        setMyDonationTotal(res.data.totalAmount);
+      } catch (error) {
+        console.error("내 기부 금액 가져오기 실패:", error);
+      }
+    };
+
     fetchRank();
+    fetchMyDonation();
   }, [navigate]);
 
   return (
@@ -76,8 +97,10 @@ function Donate() {
       <DonationBox>
         <DonationHeaderWrapper>
           <DonationHeader>
-            <DonationYear>2024년 기부금</DonationYear>
-            <DonationAmount>98,000원</DonationAmount>
+            <DonationYear>2025년 기부금</DonationYear>
+            <DonationAmount>
+              {myDonationTotal.toLocaleString()}원
+            </DonationAmount>
           </DonationHeader>
           <PostMailIcon src={postmail} alt="기부 메일" />
         </DonationHeaderWrapper>
@@ -151,7 +174,7 @@ const Title = styled.h2`
   margin-top: 10px;
   flex-grow: 1;
   text-align: center;
-  margin-left:50px;
+  margin-left: 50px;
 `;
 
 const AlarmIcon = styled.img`
@@ -337,7 +360,7 @@ const RankingDate = styled.span`
 const RankingList = styled.ul`
   margin-top: 16px;
   margin-right: 3px;
-  margin-left: -12px;
+  margin-left: -40px;
 `;
 
 const RankingItem = styled.li`
