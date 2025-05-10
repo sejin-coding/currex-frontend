@@ -5,7 +5,7 @@ const KakaoMap = ({ latitude, longitude }) => {
     const loadKakaoMap = () => {
       if (!window.kakao || !window.kakao.maps) {
         const script = document.createElement("script");
-        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services`;
+        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_KEY}&libraries=services`;
         script.async = true;
         script.onload = () => {
           initMap();
@@ -14,7 +14,7 @@ const KakaoMap = ({ latitude, longitude }) => {
       } else {
         initMap();
       }
-      console.log("🔍 Kakao Maps API Key:", process.env.REACT_APP_KAKAO_API_KEY);
+      console.log("🔍 Kakao Maps API Key:", process.env.REACT_APP_KAKAOMAP_KEY);
 
     };
 
