@@ -57,7 +57,7 @@ const Detect = () => {
       setLoading(true);
       try {
         const response = await axios.post(
-          "http://currex.kro.kr:8000/predict",
+          "https://currex.kro.kr:8000/predict",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );

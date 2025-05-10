@@ -10,7 +10,7 @@ import sendicon from "../../images/sendicon.svg";
 import PlaceModal from "./PlaceModal";
 import axios from "axios";
 
-const socket = io("http://currex.kro.kr:5000", { withCredentials: true });
+const socket = io("https://currex.kro.kr:5000", { withCredentials: true });
 
 function Chat() {
   const { chatRoomId } = useParams();

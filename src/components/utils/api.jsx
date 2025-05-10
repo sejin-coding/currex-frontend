@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 기본 Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: "http://15.165.1.49:5000",  // 백엔드 주소
+  baseURL: "https://15.165.1.49:5000",  // 백엔드 주소
   withCredentials: true,  // 쿠키 전달 (refreshToken을 위한 설정)
 });
 
@@ -31,7 +31,7 @@ api.interceptors.response.use(
       try {
         // /auth/refresh 요청하여 새로운 accessToken 발급
         const refreshResponse = await axios.post(
-          "http://15.165.1.49:5000/auth/refresh",
+          "https://15.165.1.49:5000/auth/refresh",
           {},
           { withCredentials: true } // 쿠키 전달 (refreshToken 포함)
         );
