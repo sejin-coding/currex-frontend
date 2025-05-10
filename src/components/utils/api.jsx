@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 기본 Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: "https://15.165.1.49:5000",  // 백엔드 주소
+  baseURL: "https://currex.kro.kr",  // 백엔드 주소
   withCredentials: true,  // 쿠키 전달 (refreshToken을 위한 설정)
 });
 
