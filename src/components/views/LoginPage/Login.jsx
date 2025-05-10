@@ -39,12 +39,12 @@ function Login() {
   // 로그인 버튼을 눌렀을 때 실행
   const handleGoogleLogin = () => {
     clearStorageBeforeLogin();
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = "http://currex.kro.kr:5000/api/auth/google";
   };
   
   const handleKakaoLogin = () => {
     clearStorageBeforeLogin();
-    window.location.href = "http://localhost:5000/api/auth/kakao";
+    window.location.href = "http://15.165.1.49:5000/api/auth/kakao";
   };
 
   //다른 탭에서도 로그인 변경 적용
