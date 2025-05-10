@@ -31,13 +31,23 @@ const Detect = () => {
     const startCamera = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: {
+            facingMode: { exact: "environment" }, // 후면 카메라
+          },
         });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
       } catch (error) {
         console.error("카메라 접근 오류:", error);
+        alert("후면 카메라를 찾을 수 없습니다. 기본 카메라로 전환됩니다.");
+        // fallback: 일반 카메라
+        const fallbackStream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        if (videoRef.current) {
+          videoRef.current.srcObject = fallbackStream;
+        }
       }
     };
     startCamera();
