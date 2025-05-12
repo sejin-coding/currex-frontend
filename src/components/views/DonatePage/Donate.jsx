@@ -74,6 +74,7 @@ function Donate() {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          withCredentials: true,
         });
 
         console.log("내 기부 총액 응답:", res.data);

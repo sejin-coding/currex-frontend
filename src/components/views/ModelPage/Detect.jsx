@@ -15,8 +15,8 @@ const Detect = () => {
   const [cameraHeight, setCameraHeight] = useState(window.innerHeight * 0.8);
 
   const currencyMap = {
-    22: { country: "유럽 연합", amount: "10 EUR", krwValue: "15,989" },
-    default: { country: "유럽 연합", amount: "0.1 EUR", krwValue: "160" },
+    22: { country: "유럽 연합", amount: "10 EUR", krwValue: "15,795" },
+    default: { country: "유럽 연합", amount: "10 CENT", krwValue: "158" },
   };
 
   useEffect(() => {
