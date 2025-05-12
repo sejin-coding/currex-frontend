@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -12,45 +13,47 @@ function SellerMatch() {
   const [exchangeRates, setExchangeRates] = useState({});
   const navigate = useNavigate();
   const [districts, setDistricts] = useState({});
+  const location = useLocation();
+  const buyerInfo = location.state;
 
   const currentUserId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
   const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
-
-
+  
 
   useEffect(() => {
-    const fetchSells = async () => {
-      try {
-        const response = await api.patch("/api/trade/SellerMatch", {
-        userId: userId // 직접 전달
-        });
-        console.log("백엔드 응답 데이터:", response.data);
-  
-        const sellersWithDistance = response.data.sellersWithDistance || [];
-  
-        console.log("현재 로그인한 사용자 ID:", currentUserId);
-        sellersWithDistance.forEach((sell, index) => {
-        });
-  
-        // 본인 판매글 제외 (String 변환 후 비교)
-        const filteredSells = sellersWithDistance.filter(
-          (sell) => String(sell.sellerId) !== String(currentUserId)
-        );
-  
-        // 거리순 정렬
-        const sortedSells = filteredSells.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
-  
-        setSells(sortedSells);
-      } catch (error) {
-        console.error("판매 데이터 불러오기 오류:", error);
-        setError("판매 목록을 불러올 수 없습니다.");
-      } finally {
-        setLoading(false);
+  const fetchSells = async () => {
+    try {
+      if (!buyerInfo) {
+        setError("구매자 정보가 없습니다.");
+        return;
       }
-    };
-  
-    fetchSells();
-}, [userId, currentUserId]);
+
+      const response = await api.patch("/api/trade/SellerMatch", buyerInfo);  // 올바르게 전달
+
+      console.log("백엔드 응답 데이터:", response.data);
+
+      const sellersWithDistance = response.data.sellersWithDistance || [];
+
+      const filteredSells = sellersWithDistance.filter(
+        (sell) => String(sell.sellerId) !== String(currentUserId)
+      );
+
+      const sortedSells = filteredSells.sort(
+        (a, b) => parseFloat(a.distance) - parseFloat(b.distance)
+      );
+
+      setSells(sortedSells);
+    } catch (error) {
+      console.error("판매 데이터 불러오기 오류:", error);
+      setError("판매 목록을 불러올 수 없습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchSells();
+}, [buyerInfo, currentUserId]);
+
   
 
   //실시간 환율

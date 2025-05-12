@@ -82,22 +82,30 @@ function BuyMoney() {
   };
 
   const handleSubmit = async () => {
-    if (![latitude, longitude, minAmount, maxAmount, userLocation].every(Boolean)) {
-      alert("모든 필드를 입력해주세요.");
-      return;
-    }
-  
-        try {
-          const requestData = { currency, minAmount, maxAmount, userLocation, latitude, longitude };
-          const response = await api.post("/api/trade/buy", requestData);
-          console.log("구매 요청 성공:", response.data);
-          navigate("/SellerMatch");
-        } catch (error) {
-          console.error("구매 요청 중 오류 발생:", error);
-          alert(error.response?.data?.error || "서버 오류 발생");
-        }
-      };
-    
+  if (![latitude, longitude, minAmount, maxAmount, userLocation].every(Boolean)) {
+    alert("모든 필드를 입력해주세요.");
+    return;
+  }
+
+  try {
+    const requestData = {
+      currency,
+      minAmount,
+      maxAmount,
+      userLocation,
+      latitude,
+      longitude,
+      userId: localStorage.getItem("userId") || sessionStorage.getItem("userId"),
+    };
+
+    // 여기서 state로 전달!
+    navigate("/SellerMatch", { state: requestData });
+
+  } catch (error) {
+    console.error("구매 요청 중 오류 발생:", error);
+    alert(error.response?.data?.error || "서버 오류 발생");
+  }
+};
   
 
   return (
