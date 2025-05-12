@@ -5,7 +5,7 @@ import NavBar from "../NavBar/NavBar";
 
 function Layout({ children }) {
   const location = useLocation(); // 현재 경로 가져오기
-  const showNavBar = ["/list", "/donate", "/chatlist", "/mypage", "/mysell", "/myexchange"].includes(location.pathname); 
+  const showNavBar = ["/list", "/donate", "/chatlist", "/mypage", "/mysell", "/myexchange", "/SellerMatch"].includes(location.pathname); 
 
   return (
     <Container>
