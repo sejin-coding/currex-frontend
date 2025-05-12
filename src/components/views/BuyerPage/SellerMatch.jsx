@@ -14,11 +14,16 @@ function SellerMatch() {
   const [districts, setDistricts] = useState({});
 
   const currentUserId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+  const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+
+
 
   useEffect(() => {
     const fetchSells = async () => {
       try {
-        const response = await api.patch("/api/trade/SellerMatch", { withCredentials: true });
+        const response = await api.patch("/api/trade/SellerMatch", {
+        userId: userId // 직접 전달
+        });
         console.log("백엔드 응답 데이터:", response.data);
   
         const sellersWithDistance = response.data.sellersWithDistance || [];
@@ -45,7 +50,7 @@ function SellerMatch() {
     };
   
     fetchSells();
-  }, []);
+}, [userId, currentUserId]);
   
 
   //실시간 환율
