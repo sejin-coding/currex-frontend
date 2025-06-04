@@ -5,6 +5,101 @@ import { useNavigate } from "react-router-dom"; // React Router 사용
 import BackArrow from "../../images/backarrow.svg"; // SVG 아이콘 불러오기
 import euroflag from "../../images/euro.png";
 
+const rawCurrencyMap = {
+  0: { country: "베트남", amount: "100,000 VND", krwValue: "-" },
+  1: { country: "베트남", amount: "10,000 VND", krwValue: "-" },
+  2: { country: "일본", amount: "10,000 JPY", krwValue: "-" },
+  3: { country: "홍콩", amount: "1,000 HKD", krwValue: "-" },
+  4: { country: "베트남", amount: "1,000 VND", krwValue: "-" },
+  5: { country: "일본", amount: "1,000 JPY", krwValue: "-" },
+  6: { country: "대만", amount: "1,000 TWD", krwValue: "-" },
+  7: { country: "호주", amount: "100 AUD", krwValue: "-" },
+  8: { country: "홍콩", amount: "100 HKD", krwValue: "-" },
+  9: { country: "미국", amount: "100 USD", krwValue: "-" },
+  10: { country: "유럽 연합", amount: "100 EUR", krwValue: "-" },
+  11: { country: "일본", amount: "100 JPY", krwValue: "-" },
+  12: { country: "중국", amount: "100 CNY", krwValue: "-" },
+  13: { country: "대만", amount: "100 TWD", krwValue: "-" },
+  14: { country: "호주", amount: "10 CENT", krwValue: "-" },
+  15: { country: "유럽 연합", amount: "10 CENT", krwValue: "-" },
+  16: { country: "홍콩", amount: "10 CENT", krwValue: "-" },
+  17: { country: "미국", amount: "10 CENT", krwValue: "-" },
+  18: { country: "호주", amount: "10 AUD", krwValue: "-" },
+  19: { country: "홍콩", amount: "10 HKD", krwValue: "-" },
+  20: { country: "미국", amount: "10 USD", krwValue: "-" },
+  21: { country: "홍콩", amount: "10 HKD (동전)", krwValue: "-" },
+  22: { country: "유럽 연합", amount: "10 EUR", krwValue: "-" },
+  23: { country: "일본", amount: "10 JPY", krwValue: "-" },
+  24: { country: "중국", amount: "10 CNY", krwValue: "-" },
+  25: { country: "대만", amount: "10 TWD (동전)", krwValue: "-" },
+  26: { country: "유럽 연합", amount: "1 CENT", krwValue: "-" },
+  27: { country: "미국", amount: "1 CENT", krwValue: "-" },
+  28: { country: "미국", amount: "1 USD", krwValue: "-" },
+  29: { country: "호주", amount: "1 AUD (동전)", krwValue: "-" },
+  30: { country: "홍콩", amount: "1 HKD (동전)", krwValue: "-" },
+  31: { country: "미국", amount: "1 USD (동전)", krwValue: "-" },
+  32: { country: "유럽 연합", amount: "1 EUR", krwValue: "-" },
+  33: { country: "중국", amount: "1 JIAO", krwValue: "-" },
+  34: { country: "일본", amount: "1 JPY", krwValue: "-" },
+  35: { country: "중국", amount: "1 CNY", krwValue: "-" },
+  36: { country: "중국", amount: "1 CNY (동전)", krwValue: "-" },
+  37: { country: "대만", amount: "1 TWD (동전)", krwValue: "-" },
+  38: { country: "베트남", amount: "200,000 VND", krwValue: "-" },
+  39: { country: "베트남", amount: "20,000 VND", krwValue: "-" },
+  40: { country: "베트남", amount: "2,000 VND", krwValue: "-" },
+  41: { country: "일본", amount: "2,000 JPY", krwValue: "-" },
+  42: { country: "대만", amount: "2,000 TWD", krwValue: "-" },
+  43: { country: "베트남", amount: "200 VND", krwValue: "-" },
+  44: { country: "유럽 연합", amount: "200 EUR", krwValue: "-" },
+  45: { country: "대만", amount: "200 TWD", krwValue: "-" },
+  46: { country: "유럽 연합", amount: "20 CENT", krwValue: "-" },
+  47: { country: "홍콩", amount: "20 CENT", krwValue: "-" },
+  48: { country: "호주", amount: "20 AUD", krwValue: "-" },
+  49: { country: "홍콩", amount: "20 HKD", krwValue: "-" },
+  50: { country: "미국", amount: "20 USD", krwValue: "-" },
+  51: { country: "유럽 연합", amount: "20 EUR", krwValue: "-" },
+  52: { country: "중국", amount: "20 CNY", krwValue: "-" },
+  53: { country: "대만", amount: "20 TWD (동전)", krwValue: "-" },
+  54: { country: "미국", amount: "25 CENT", krwValue: "-" },
+  55: { country: "유럽 연합", amount: "2 CENT", krwValue: "-" },
+  56: { country: "미국", amount: "2 USD", krwValue: "-" },
+  57: { country: "호주", amount: "2 AUD (동전)", krwValue: "-" },
+  58: { country: "홍콩", amount: "2 HKD (동전)", krwValue: "-" },
+  59: { country: "유럽 연합", amount: "2 EUR", krwValue: "-" },
+  60: { country: "베트남", amount: "500,000 VND", krwValue: "-" },
+  61: { country: "베트남", amount: "50,000 VND", krwValue: "-" },
+  62: { country: "베트남", amount: "5,000 VND", krwValue: "-" },
+  63: { country: "일본", amount: "5,000 JPY", krwValue: "-" },
+  64: { country: "홍콩", amount: "500 HKD", krwValue: "-" },
+  65: { country: "베트남", amount: "500 VND", krwValue: "-" },
+  66: { country: "유럽 연합", amount: "500 EUR", krwValue: "-" },
+  67: { country: "일본", amount: "500 JPY", krwValue: "-" },
+  68: { country: "대만", amount: "500 TWD", krwValue: "-" },
+  69: { country: "호주", amount: "50 CENT", krwValue: "-" },
+  70: { country: "유럽 연합", amount: "50 CENT", krwValue: "-" },
+  71: { country: "홍콩", amount: "50 CENT", krwValue: "-" },
+  72: { country: "미국", amount: "50 CENT", krwValue: "-" },
+  73: { country: "호주", amount: "50 AUD", krwValue: "-" },
+  74: { country: "홍콩", amount: "50 HKD", krwValue: "-" },
+  75: { country: "미국", amount: "50 USD", krwValue: "-" },
+  76: { country: "유럽 연합", amount: "50 EUR", krwValue: "-" },
+  77: { country: "일본", amount: "50 JPY", krwValue: "-" },
+  78: { country: "중국", amount: "50 CNY", krwValue: "-" },
+  79: { country: "대만", amount: "50 TWD (동전)", krwValue: "-" },
+  80: { country: "호주", amount: "5 CENT", krwValue: "-" },
+  81: { country: "유럽 연합", amount: "5 CENT", krwValue: "-" },
+  82: { country: "미국", amount: "5 CENT", krwValue: "-" },
+  83: { country: "호주", amount: "5 AUD", krwValue: "-" },
+  84: { country: "미국", amount: "5 USD", krwValue: "-" },
+  85: { country: "홍콩", amount: "5 HKD (동전)", krwValue: "-" },
+  86: { country: "유럽 연합", amount: "5 EUR", krwValue: "-" },
+  87: { country: "중국", amount: "5 JIAO", krwValue: "-" },
+  88: { country: "일본", amount: "5 JPY", krwValue: "-" },
+  89: { country: "중국", amount: "5 CNY", krwValue: "-" },
+  90: { country: "대만", amount: "5 TWD (동전)", krwValue: "-" },
+  default: { country: "알 수 없음", amount: "-", krwValue: "-" },
+};
+
 const Detect = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
@@ -13,11 +108,44 @@ const Detect = () => {
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [cameraHeight, setCameraHeight] = useState(window.innerHeight * 0.8);
+  const [exchangeRates, setExchangeRates] = useState({});
+  const [currencyMap, setCurrencyMap] = useState(rawCurrencyMap);
 
-  const currencyMap = {
-    22: { country: "유럽 연합", amount: "10 EUR", krwValue: "15,795" },
-    default: { country: "유럽 연합", amount: "10 CENT", krwValue: "158" },
-  };
+  // 환율 API 호출
+  useEffect(() => {
+    axios
+      .get("https://api.exchangerate-api.com/v4/latest/KRW")
+      .then((res) => {
+        const rates = res.data.rates;
+
+        // currencyMap에 krwValue 추가
+        const updatedMap = {};
+        Object.entries(rawCurrencyMap).forEach(([key, val]) => {
+          const amountParts = val.amount.split(" ");
+          const value = parseFloat(amountParts[0].replace(/,/g, ""));
+
+          const unit = amountParts[1].toUpperCase();
+
+          let rate = rates[unit];
+          if (unit === "CENT") {
+            rate = rates["USD"] / 100;
+          } else if (unit === "JIAO") {
+            rate = rates["CNY"] / 10;
+          }
+
+          const krwValue = rate ? Math.round(value * (1 / rate)) : "-";
+
+          updatedMap[key] = {
+            ...val,
+            krwValue,
+          };
+        });
+
+        setExchangeRates(rates);
+        setCurrencyMap(updatedMap);
+      })
+      .catch((err) => console.error("환율 호출 실패:", err));
+  }, []);
 
   useEffect(() => {
     const updateHeight = () => {
