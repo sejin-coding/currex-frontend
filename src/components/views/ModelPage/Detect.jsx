@@ -128,23 +128,15 @@ const Detect = () => {
           }
 
           const amountParts = val.amount.split(" ");
-          const rawValue = parseFloat(amountParts[0].replace(/,/g, ""));
+          let rawValue = parseFloat(amountParts[0].replace(/,/g, ""));
           const unit = amountParts[1]?.replace(/[^A-Z]/g, "").toUpperCase();
 
           let rate = rates[unit];
 
           if (unit === "CENT") {
-            if (val.country === "유럽 연합") {
-              rate = rates["EUR"] * 10;
-            } else if (val.country === "미국") {
-              rate = rates["USD"] / 100;
-            } else if (val.country === "홍콩") {
-              rate = rates["HKD"] / 100;
-            } else if (val.country === "호주") {
-              rate = rates["AUD"] / 100;
-            } else {
-              rate = rates["USD"] / 100; // fallback
-            }
+            rawValue /= 100;
+          } else if (unit === "JIAO") {
+            rawValue /= 10;
           }
 
           const krwValue = rate ? Math.round(rawValue * (1 / rate)) : "-";
