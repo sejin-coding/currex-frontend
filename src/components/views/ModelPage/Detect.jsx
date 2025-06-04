@@ -147,7 +147,7 @@ const Detect = () => {
             }
           }
 
-          const krwValue = rate ? Math.round(rawValue * (1 / rate)) : "-";
+          const krwValue = rate ? Math.round(rawValue * rate) : "-";
 
           updatedMap[key] = {
             ...val,
