@@ -118,22 +118,22 @@ const Detect = () => {
       .then((res) => {
         const rates = res.data.rates;
 
-        // currencyMap에 krwValue 추가
         const updatedMap = {};
+
         Object.entries(rawCurrencyMap).forEach(([key, val]) => {
           const amountParts = val.amount.split(" ");
-          const value = parseFloat(amountParts[0].replace(/,/g, ""));
-
-          const unit = amountParts[1].toUpperCase();
+          const rawValue = parseFloat(amountParts[0].replace(/,/g, ""));
+          const unit = amountParts[1].replace(/[^A-Z]/g, "").toUpperCase();
 
           let rate = rates[unit];
+
           if (unit === "CENT") {
             rate = rates["USD"] / 100;
           } else if (unit === "JIAO") {
             rate = rates["CNY"] / 10;
           }
 
-          const krwValue = rate ? Math.round(value * (1 / rate)) : "-";
+          const krwValue = rate ? Math.round(rawValue / rate) : "-";
 
           updatedMap[key] = {
             ...val,
@@ -141,7 +141,6 @@ const Detect = () => {
           };
         });
 
-        setExchangeRates(rates);
         setCurrencyMap(updatedMap);
       })
       .catch((err) => console.error("환율 호출 실패:", err));
