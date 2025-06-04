@@ -121,9 +121,15 @@ const Detect = () => {
         const updatedMap = {};
 
         Object.entries(rawCurrencyMap).forEach(([key, val]) => {
+          if (!val.amount || typeof val.amount !== "string") {
+            console.warn(`❗잘못된 amount 값: key=${key}, value=`, val);
+            updatedMap[key] = { ...val, krwValue: "-" };
+            return; // skip 잘못된 항목
+          }
+
           const amountParts = val.amount.split(" ");
           const rawValue = parseFloat(amountParts[0].replace(/,/g, ""));
-          const unit = amountParts[1].replace(/[^A-Z]/g, "").toUpperCase();
+          const unit = amountParts[1]?.replace(/[^A-Z]/g, "").toUpperCase();
 
           let rate = rates[unit];
 
@@ -133,7 +139,7 @@ const Detect = () => {
             rate = rates["CNY"] / 10;
           }
 
-          const krwValue = rate ? Math.round(rawValue / rate) : "-";
+          const krwValue = rate ? Math.round(rawValue * (1 / rate)) : "-";
 
           updatedMap[key] = {
             ...val,
