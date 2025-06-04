@@ -133,12 +133,6 @@ const Detect = () => {
 
           let rate = rates[unit];
 
-          if (unit === "CENT") {
-            rate = rates["USD"] / 100;
-          } else if (unit === "JIAO") {
-            rate = rates["CNY"] / 10;
-          }
-
           const krwValue = rate ? Math.round(rawValue * (1 / rate)) : "-";
 
           updatedMap[key] = {
