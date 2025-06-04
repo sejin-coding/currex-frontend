@@ -128,15 +128,15 @@ const Detect = () => {
           }
 
           const amountParts = val.amount.split(" ");
-          let rawValue = parseFloat(amountParts[0].replace(/,/g, ""));
+          const rawValue = parseFloat(amountParts[0].replace(/,/g, ""));
           const unit = amountParts[1]?.replace(/[^A-Z]/g, "").toUpperCase();
 
           let rate = rates[unit];
 
           if (unit === "CENT") {
-            rawValue /= 100;
+            rate = rates["USD"] / 100;
           } else if (unit === "JIAO") {
-            rawValue /= 10;
+            rate = rates["CNY"] / 10;
           }
 
           const krwValue = rate ? Math.round(rawValue * (1 / rate)) : "-";
