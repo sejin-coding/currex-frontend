@@ -134,9 +134,17 @@ const Detect = () => {
           let rate = rates[unit];
 
           if (unit === "CENT") {
-            rate = rates["USD"] / 100;
-          } else if (unit === "JIAO") {
-            rate = rates["CNY"] / 10;
+            if (val.country === "유럽 연합") {
+              rate = rates["EUR"] / 100;
+            } else if (val.country === "미국") {
+              rate = rates["USD"] / 100;
+            } else if (val.country === "홍콩") {
+              rate = rates["HKD"] / 100;
+            } else if (val.country === "호주") {
+              rate = rates["AUD"] / 100;
+            } else {
+              rate = rates["USD"] / 100; // fallback
+            }
           }
 
           const krwValue = rate ? Math.round(rawValue * (1 / rate)) : "-";
